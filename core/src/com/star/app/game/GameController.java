@@ -1,8 +1,13 @@
 package com.star.app.game;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.star.app.screen.GameScreen;
 import com.star.app.screen.ScreenManager;
+
+import java.awt.*;
 
 public class GameController {
     private Background background;
@@ -10,6 +15,7 @@ public class GameController {
     private AsteroidController asteroidController;
     private ParticleController particleController;
     private PowerUpsController powerUpsController;
+    private GameScreen gameScreen;
     private Hero hero;
     private Vector2 tempVec;
 
@@ -37,7 +43,11 @@ public class GameController {
         return hero;
     }
 
-    public GameController() {
+    public GameScreen getGameScreen() {
+        return gameScreen;
+    }
+
+    public GameController(GameScreen gameScreen) {
         this.background = new Background(this);
         this.bulletController = new BulletController(this);
         this.asteroidController = new AsteroidController(this);
@@ -45,6 +55,7 @@ public class GameController {
         this.powerUpsController = new PowerUpsController(this);
         this.hero = new Hero(this);
         this.tempVec = new Vector2();
+        this.gameScreen = gameScreen;
 
         for (int i = 0; i < 3; i++) {
             asteroidController.setup(MathUtils.random(0, ScreenManager.SCREEN_WIDTH),
@@ -120,5 +131,9 @@ public class GameController {
                 pu.deactivate();
             }
         }
+    }
+
+    public void pause(SpriteBatch batch, BitmapFont font) {
+        font.draw(batch, "Pause", ScreenManager.SCREEN_WIDTH/2-100, ScreenManager.SCREEN_HEIGHT/2);
     }
 }

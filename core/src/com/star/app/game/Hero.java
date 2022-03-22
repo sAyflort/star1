@@ -54,6 +54,10 @@ public class Hero {
         return angle;
     }
 
+    public int getMoney() {
+        return money;
+    }
+
     public Hero(GameController gc) {
         this.gc = gc;
         this.texture = Assets.getInstance().getAtlas().findRegion("ship");
@@ -81,6 +85,9 @@ public class Hero {
 
     public void takeDamage(int amount) {
         hp -= amount;
+        if (hp <= 0) {
+            ScreenManager.getInstance().changeScreen(ScreenManager.ScreenType.OVER);
+        }
     }
 
     public void consume(PowerUp p){
